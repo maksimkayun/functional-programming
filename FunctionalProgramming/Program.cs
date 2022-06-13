@@ -4,6 +4,7 @@
 // а затем печатает их в консоль так, чтобы каждая строка была напечатана в новой строке.
 // Используйте Action<Т>.
 
+using System.Collections;
 using FunctionalProgramming;
 
 Action<string> WriteLn = s => Console.WriteLine(s);
@@ -24,10 +25,11 @@ Func<int[]?, int> GetMin = arr => (arr ?? Array.Empty<int>()).Min();
 
 // Напишите программу, которая считывает диапазон целых чисел, команду четные или нечетные (odd/even)
 // и затем выводит все соответствующие числа из диапазона. Используйте Func<T, T>.
-Func<IEnumerable<int>?, string, List<int>> GetAllOfRange = (range, type) =>
+Func<IEnumerable<string>?, List<int>> GetAllOfRange = range =>
 {
     List<int> output = new List<int>();
-    for (int i = range.ToList()[0]; i <= range.ToList()[1]; i++)
+    var type = range.LastOrDefault();
+    for (int i = int.Parse(range.ToList()[0]); i <= int.Parse(range.ToList()[1]); i++)
     {
         if (type.Equals("odd") && i % 2 != 0
             || type.Equals("even") && i % 2 == 0)
@@ -38,9 +40,9 @@ Func<IEnumerable<int>?, string, List<int>> GetAllOfRange = (range, type) =>
 
     return output;
 };
-//var input = Console.ReadLine()?.Split(' ').Select(int.Parse);
-//var type = Console.ReadLine();
-//GetAllOfRange(input, type).ForEach(e => Console.Write(e + " "));
+var input = Console.ReadLine()?.Split(' ').ToList();
+input.Add(Console.ReadLine());
+GetAllOfRange(input).ForEach(e => Console.Write(e + " "));
 
 
 /* Напишите программу, которая выполняет некоторые арифметические операции над заданной коллекцией. 
@@ -104,7 +106,7 @@ Func<int, int, bool> IsNotshared = (n, divider) => n % divider != 0;
 
 void PrintIf(string name, Predicate<string> condition)
 {
-    if(condition(name))
+    if (condition(name))
         Console.Write(name + " ");
 }
 
